@@ -1,0 +1,171 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.table-card {
+  min-width: 0;
+  padding: 23px 24px 12px;
+  border: 1px solid #efedf5;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 18px 50px rgba(68, 56, 120, 0.06);
+}
+
+.table-heading,
+.table-title-group {
+  display: flex;
+  align-items: center;
+}
+
+.table-heading {
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 20px;
+}
+
+.table-title-group {
+  gap: 13px;
+}
+
+.table-icon {
+  width: 41px;
+  height: 41px;
+  display: grid;
+  flex: 0 0 41px;
+  place-items: center;
+  border-radius: 13px;
+  color: #715ee0;
+  background: #f0edff;
+}
+
+.table-title-group h2 {
+  margin: 0;
+  color: #38354a;
+  font-size: 15px;
+}
+
+.table-title-group p {
+  margin: 5px 0 0;
+  color: #8c889b;
+  font-size: 11px;
+}
+
+.student-code {
+  color: #6654d9;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.program-pill {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 7px;
+  color: #6251bd;
+  background: #f1efff;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.actions-heading {
+  text-align: center;
+}
+
+.row-actions {
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+}
+
+.empty-state {
+  display: grid;
+  justify-items: center;
+  gap: 7px;
+  padding: 34px 12px;
+  color: #777488;
+  text-align: center;
+}
+
+.empty-state > span {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 4px;
+  border-radius: 13px;
+  color: #715ee0;
+  background: #f0edff;
+  font-size: 17px;
+}
+
+.empty-state strong {
+  color: #474458;
+  font-size: 12px;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 11px;
+}
+
+.table-error {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 13px;
+  margin-bottom: 13px;
+  border-radius: 10px;
+  color: #a64c4c;
+  background: #fff4f2;
+  font-size: 11px;
+}
+
+.table-error > span {
+  flex: 1;
+}
+
+:host ::ng-deep .student-data-table .p-datatable-thead > tr > th {
+  padding: 12px 13px;
+  color: #777488;
+  background: #faf9fc;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+:host ::ng-deep .student-data-table .p-datatable-tbody > tr > td {
+  padding: 12px 13px;
+  color: #555266;
+  font-size: 11px;
+  vertical-align: middle;
+}
+
+:host ::ng-deep .student-data-table .p-datatable-tbody > tr:hover {
+  background: #fcfbff;
+}
+
+@media (max-width: 640px) {
+  .table-card {
+    padding: 18px 14px 10px;
+    border-radius: 16px;
+  }
+
+  .table-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .table-title-group p {
+    max-width: 220px;
+    line-height: 1.5;
+  }
+
+  .table-error {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .table-error > span {
+    min-width: calc(100% - 35px);
+  }
+}

@@ -1,0 +1,143 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.form-card {
+  padding: 27px 30px 25px;
+  border: 1px solid #efedf5;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 18px 50px rgba(68, 56, 120, 0.07);
+}
+
+.card-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 22px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid #f0eef5;
+}
+
+.section-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  flex: 0 0 42px;
+  place-items: center;
+  border-radius: 13px;
+  color: #715ee0;
+  background: #f0edff;
+  font-size: 16px;
+}
+
+.card-heading h2 {
+  margin: 0;
+  color: #38354a;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.card-heading p {
+  margin: 5px 0 0;
+  color: #8c889b;
+  font-size: 11px;
+}
+
+.card-heading p span,
+.field label > span:not(.optional) {
+  color: #d87974;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 22px;
+}
+
+.field {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.field label {
+  color: #403d51;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.field label .optional {
+  color: #a09cac;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.field-hint {
+  color: #a09cac;
+  font-size: 10px;
+}
+
+.field-error {
+  color: #c34f5a;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 11px;
+  padding-top: 23px;
+  margin-top: 23px;
+  border-top: 1px solid #f0eef5;
+}
+
+:host ::ng-deep .field-control,
+:host ::ng-deep .field .p-inputtext {
+  width: 100%;
+}
+
+:host ::ng-deep .field-control.p-datepicker {
+  display: flex;
+}
+
+:host ::ng-deep .field .p-inputtext,
+:host ::ng-deep .field-control {
+  font-size: 12px;
+}
+
+:host ::ng-deep .field .p-inputtext {
+  min-height: 42px;
+  border-color: #e8e5ef;
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+:host ::ng-deep .field .p-inputtext:enabled:focus {
+  border-color: #8b79e6;
+  box-shadow: 0 0 0 3px rgba(113, 94, 224, 0.12);
+}
+
+@media (max-width: 640px) {
+  .form-card {
+    padding: 22px 19px;
+    border-radius: 16px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 17px;
+  }
+
+  .form-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .form-actions p-button {
+    width: 100%;
+  }
+}

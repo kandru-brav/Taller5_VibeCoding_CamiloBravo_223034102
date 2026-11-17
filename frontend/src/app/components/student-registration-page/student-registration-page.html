@@ -1,0 +1,69 @@
+<p-toast position="top-right" />
+<p-confirmdialog />
+
+@if (errorProgramas()) {
+  <div class="program-error" role="alert">
+    <span class="error-icon"><i class="pi pi-exclamation-triangle"></i></span>
+    <div class="error-copy">
+      <strong>No fue posible cargar los programas</strong>
+      <p>{{ errorProgramas() }}</p>
+    </div>
+    <p-button
+      label="Reintentar"
+      icon="pi pi-refresh"
+      severity="secondary"
+      [outlined]="true"
+      [loading]="cargandoProgramas()"
+      (onClick)="cargarProgramas()"
+    />
+  </div>
+}
+
+<main class="management-page">
+  <header class="topbar">
+    <a class="brand" routerLink="/" aria-label="Volver al inicio">
+      <span class="brand-mark" aria-hidden="true"><i class="pi pi-graduation-cap"></i></span>
+      <span class="brand-name">Campus<span>+</span></span>
+    </a>
+    <span class="topbar-label">PORTAL ACADÉMICO</span>
+  </header>
+
+  <section class="management-heading">
+    <div>
+      <p class="eyebrow"><span></span> GESTIÓN ACADÉMICA</p>
+      <h1>Administración de <span>estudiantes</span></h1>
+      <p>Registra, consulta y mantén actualizada la comunidad Campus+.</p>
+    </div>
+    @if (cargandoEdicion()) {
+      <span class="loading-edit" role="status"><i class="pi pi-spin pi-spinner"></i> Cargando datos…</span>
+    }
+  </section>
+
+  <section class="management-grid" aria-label="Gestión de estudiantes">
+    <div class="form-panel" [class.editing]="codigoEdicion()">
+      <app-student-form
+        [programas]="programas()"
+        [cargandoProgramas]="cargandoProgramas()"
+        [guardando]="guardando()"
+        [editando]="!!codigoEdicion()"
+        (guardar)="registrar($event)"
+        (cancelarEdicion)="cancelarEdicion()"
+      />
+    </div>
+
+    <app-student-table
+      [estudiantes]="estudiantes()"
+      [cargando]="cargandoEstudiantes()"
+      [eliminandoCodigo]="eliminandoCodigo()"
+      [error]="errorEstudiantes()"
+      (refrescar)="cargarEstudiantes()"
+      (editar)="editar($event)"
+      (eliminar)="confirmarEliminacion($event)"
+    />
+  </section>
+
+  <footer class="page-footer">
+    <span>Construyendo el futuro, estudiante a estudiante.</span>
+    <span class="footer-status"><span></span> Campus+ académico</span>
+  </footer>
+</main>

@@ -1,0 +1,204 @@
+<section class="form-card" aria-labelledby="form-title">
+  <div class="card-heading">
+    <span class="section-icon"><i class="pi pi-user-plus"></i></span>
+    <div>
+      <h2 id="form-title">{{ editando ? 'Editar estudiante' : 'Registrar estudiante' }}</h2>
+      <p>Los campos marcados con <span aria-hidden="true">*</span> son obligatorios.</p>
+    </div>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <div class="form-grid">
+      <div class="field">
+        <label for="codigo_estudiante">Código de estudiante <span>*</span></label>
+        <input
+          pInputText
+          id="codigo_estudiante"
+          formControlName="codigo_estudiante"
+          autocomplete="off"
+          inputmode="numeric"
+          maxlength="20"
+          [readOnly]="editando"
+          placeholder="Ej. 00012345"
+          aria-describedby="codigo-help codigo-error"
+        />
+        <small id="codigo-help" class="field-hint">Solo números, hasta 20 dígitos.</small>
+        @if (form.controls.codigo_estudiante.touched && form.controls.codigo_estudiante.errors) {
+          <small id="codigo-error" class="field-error" role="alert">
+            @if (form.controls.codigo_estudiante.hasError('required')) {
+              El código es obligatorio.
+            } @else if (form.controls.codigo_estudiante.hasError('maxlength')) {
+              El código no puede superar 20 caracteres.
+            } @else if (form.controls.codigo_estudiante.hasError('pattern')) {
+              Ingresa solamente dígitos.
+            }
+          </small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="nombres">Nombres <span>*</span></label>
+        <input
+          pInputText
+          id="nombres"
+          formControlName="nombres"
+          autocomplete="given-name"
+          placeholder="Nombres del estudiante"
+          aria-describedby="nombres-error"
+        />
+        @if (form.controls.nombres.touched && form.controls.nombres.errors) {
+          <small id="nombres-error" class="field-error" role="alert">
+            @if (form.controls.nombres.hasError('required') || form.controls.nombres.hasError('blank')) {
+              Ingresa los nombres del estudiante.
+            } @else {
+              Los nombres no pueden superar 100 caracteres.
+            }
+          </small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="apellidos">Apellidos <span>*</span></label>
+        <input
+          pInputText
+          id="apellidos"
+          formControlName="apellidos"
+          autocomplete="family-name"
+          placeholder="Apellidos del estudiante"
+          aria-describedby="apellidos-error"
+        />
+        @if (form.controls.apellidos.touched && form.controls.apellidos.errors) {
+          <small id="apellidos-error" class="field-error" role="alert">
+            @if (form.controls.apellidos.hasError('required') || form.controls.apellidos.hasError('blank')) {
+              Ingresa los apellidos del estudiante.
+            } @else {
+              Los apellidos no pueden superar 100 caracteres.
+            }
+          </small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="fecha_nacimiento">Fecha de nacimiento <span>*</span></label>
+        <p-datepicker
+          inputId="fecha_nacimiento"
+          formControlName="fecha_nacimiento"
+          dateFormat="dd/mm/yy"
+          [maxDate]="maxDate"
+          [showIcon]="true"
+          iconDisplay="input"
+          [showButtonBar]="true"
+          placeholder="DD/MM/AAAA"
+          styleClass="field-control"
+          aria-describedby="fecha-error"
+        />
+        @if (form.controls.fecha_nacimiento.touched && form.controls.fecha_nacimiento.errors) {
+          <small id="fecha-error" class="field-error" role="alert">
+            @if (form.controls.fecha_nacimiento.hasError('required')) {
+              Selecciona la fecha de nacimiento.
+            } @else if (form.controls.fecha_nacimiento.hasError('futureDate')) {
+              La fecha no puede ser futura.
+            }
+          </small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="genero">Género</label>
+        <p-select
+          inputId="genero"
+          formControlName="genero"
+          [options]="generos"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Selecciona una opción"
+          [showClear]="true"
+          styleClass="field-control"
+        />
+      </div>
+
+      <div class="field">
+        <label for="id_programa">Programa académico <span>*</span></label>
+        @if (cargandoProgramas) {
+          <small class="field-hint" role="status">Cargando programas académicos…</small>
+        }
+        <p-select
+          inputId="id_programa"
+          formControlName="id_programa"
+          [options]="programas"
+          optionLabel="nombre_programa"
+          optionValue="id_programa"
+          placeholder="Selecciona un programa"
+          [filter]="true"
+          filterPlaceholder="Buscar programa"
+          [showClear]="true"
+          styleClass="field-control"
+          aria-describedby="programa-error"
+        />
+        @if (form.controls.id_programa.touched && form.controls.id_programa.hasError('required')) {
+          <small id="programa-error" class="field-error" role="alert">
+            Selecciona un programa académico.
+          </small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="direccion">Dirección <span class="optional">(opcional)</span></label>
+        <input
+          pInputText
+          id="direccion"
+          formControlName="direccion"
+          autocomplete="street-address"
+          maxlength="255"
+          placeholder="Dirección de residencia"
+        />
+        @if (form.controls.direccion.touched && form.controls.direccion.hasError('maxlength')) {
+          <small class="field-error" role="alert">La dirección no puede superar 255 caracteres.</small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="telefono_celular">Teléfono / celular <span class="optional">(opcional)</span></label>
+        <input
+          pInputText
+          id="telefono_celular"
+          formControlName="telefono_celular"
+          autocomplete="tel"
+          inputmode="numeric"
+          maxlength="20"
+          placeholder="Ej. 0312345678"
+          aria-describedby="telefono-error"
+        />
+        @if (form.controls.telefono_celular.touched && form.controls.telefono_celular.errors) {
+          <small id="telefono-error" class="field-error" role="alert">
+            @if (form.controls.telefono_celular.hasError('pattern')) {
+              Ingresa solamente dígitos.
+            } @else {
+              El teléfono no puede superar 20 caracteres.
+            }
+          </small>
+        }
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <p-button
+        [label]="editando ? 'Cancelar edición' : 'Limpiar'"
+        [icon]="editando ? 'pi pi-times' : 'pi pi-eraser'"
+        severity="secondary"
+        [outlined]="true"
+        type="button"
+        [disabled]="guardando"
+        (onClick)="clear()"
+      />
+      <p-button
+        [label]="editando ? 'Guardar cambios' : 'Guardar'"
+        [icon]="editando ? 'pi pi-save' : 'pi pi-check'"
+        iconPos="right"
+        type="submit"
+        [loading]="guardando"
+        [disabled]="cargandoProgramas || programas.length === 0"
+      />
+    </div>
+  </form>
+</section>

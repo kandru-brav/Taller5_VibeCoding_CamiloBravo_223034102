@@ -1,0 +1,109 @@
+<section class="table-card" aria-labelledby="students-title">
+  <div class="table-heading">
+    <div class="table-title-group">
+      <span class="table-icon"><i class="pi pi-users"></i></span>
+      <div>
+        <h2 id="students-title">Estudiantes registrados</h2>
+        <p>Consulta y administra la información académica.</p>
+      </div>
+    </div>
+    <p-button
+      label="Actualizar lista"
+      icon="pi pi-refresh"
+      severity="secondary"
+      [outlined]="true"
+      [loading]="cargando || !!eliminandoCodigo"
+      [disabled]="!!eliminandoCodigo"
+      (onClick)="refrescar.emit()"
+      ariaLabel="Actualizar lista de estudiantes"
+    />
+  </div>
+
+  @if (error) {
+    <div class="table-error" role="alert">
+      <i class="pi pi-exclamation-circle"></i>
+      <span>{{ error }}</span>
+      <p-button
+        label="Reintentar"
+        icon="pi pi-refresh"
+        [text]="true"
+        (onClick)="refrescar.emit()"
+      />
+    </div>
+  }
+
+  <p-table
+    [value]="estudiantes"
+    [loading]="cargando"
+    [paginator]="estudiantes.length > 10"
+    [rows]="10"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [scrollable]="true"
+    scrollHeight="flex"
+    responsiveLayout="scroll"
+    styleClass="student-data-table"
+    [tableStyle]="{ 'min-width': '1120px' }"
+    aria-label="Estudiantes registrados"
+  >
+    <ng-template #header>
+      <tr>
+        <th scope="col">Código</th>
+        <th scope="col">Nombres</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Fecha de nacimiento</th>
+        <th scope="col">Género</th>
+        <th scope="col">Programa académico</th>
+        <th scope="col">Dirección</th>
+        <th scope="col">Teléfono / celular</th>
+        <th scope="col" class="actions-heading">Acciones</th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-estudiante>
+      <tr>
+        <td><span class="student-code">{{ estudiante.codigo_estudiante }}</span></td>
+        <td>{{ estudiante.nombres }}</td>
+        <td>{{ estudiante.apellidos }}</td>
+        <td>{{ formatFecha(estudiante.fecha_nacimiento) }}</td>
+        <td>{{ estudiante.genero || '—' }}</td>
+        <td><span class="program-pill">{{ estudiante.nombre_programa }}</span></td>
+        <td>{{ estudiante.direccion || '—' }}</td>
+        <td>{{ estudiante.telefono_celular || '—' }}</td>
+        <td>
+          <div class="row-actions">
+            <p-button
+              icon="pi pi-pencil"
+              [text]="true"
+              [rounded]="true"
+              [disabled]="cargando || !!eliminandoCodigo"
+              ariaLabel="Editar estudiante"
+              (onClick)="editar.emit(estudiante)"
+            />
+            <p-button
+              icon="pi pi-trash"
+              severity="danger"
+              [text]="true"
+              [rounded]="true"
+              [loading]="eliminandoCodigo === estudiante.codigo_estudiante"
+              [disabled]="cargando || (!!eliminandoCodigo && eliminandoCodigo !== estudiante.codigo_estudiante)"
+              ariaLabel="Eliminar estudiante"
+              (onClick)="eliminar.emit(estudiante)"
+            />
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template #emptymessage>
+      @if (!cargando && !error) {
+        <tr>
+          <td colspan="9">
+            <div class="empty-state">
+              <span><i class="pi pi-inbox"></i></span>
+              <strong>Aún no hay estudiantes registrados</strong>
+              <p>Cuando registres estudiantes, aparecerán aquí.</p>
+            </div>
+          </td>
+        </tr>
+      }
+    </ng-template>
+  </p-table>
+</section>

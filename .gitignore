@@ -1,0 +1,27 @@
+# Credenciales y configuraciones privadas
+.env
+.env.*
+!.env.example
+**/primeui-license.local.ts
+*.pem
+*.key
+
+# Entornos virtuales y dependencias
+**/.venv/
+**/venv/
+**/node_modules/
+
+# Archivos compilados
+**/dist/
+**/build/
+**/.angular/
+**/coverage/
+
+# Archivos temporales de Python
+**/__pycache__/
+**/*.pyc
+**/.pytest_cache/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
